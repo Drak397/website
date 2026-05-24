@@ -156,8 +156,8 @@ const Hero = ({ onBookDemo }) => (
           textWrap: 'balance',
           color: 'var(--fg)',
         }}>
-          The practice runs itself.<br/>
-          <span style={{ color: 'var(--accent)' }}>You see your patients.</span>
+          You see your patients<br/>
+          <span style={{ color: 'var(--accent)' }}>The practice run itself</span>
         </h1>
         <p style={{
           fontSize: 19, lineHeight: 1.55,
@@ -174,12 +174,12 @@ const Hero = ({ onBookDemo }) => (
             if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' });
           }}>
             <Icon name="zap" size={16} color="var(--accent)" />
-            Calculate your loss
+            Calculate your ROI
           </Button>
         </div>
         <div style={{ marginTop: 28, display: 'flex', alignItems: 'center', gap: 14, color: 'var(--fg-muted)', fontSize: 13 }}>
           <Icon name="shield" size={14} />
-          <span>GDPR & HIPAA-ready · Works with your existing PMS · SMS + WhatsApp</span>
+          <span>HIPAA-ready · Works with your existing PMS · SMS + WhatsApp</span>
         </div>
       </div>
       <HeroVisual />
