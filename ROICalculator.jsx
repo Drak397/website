@@ -1,59 +1,26 @@
-/* ROI Calculator — replaces Pricing.
-   Layout mirrors the reference: dark moss-900 band, big heading on left,
-   sliders below, result card on the right. No illustrations. */
-
-const fmtEUR = (n) => '€' + Math.round(n).toLocaleString('en-US');
-
-const Slider = ({ label, value, setValue, min, max, step = 1, prefix = '', suffix = '', help }) => {
-  const pct = ((value - min) / (max - min)) * 100;
-  return (
-    <div style={{ marginBottom: 28 }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 14 }}>
-        <span style={{
-          fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: 17,
-          color: 'rgba(250,250,247,0.62)',
-        }}>{label}</span>
-        <span style={{
-          fontFamily: 'var(--font-display)', fontWeight: 900,
-          fontSize: 20, letterSpacing: '-0.04em',
-          color: 'var(--moss-300)',
-          borderBottom: '2px solid var(--moss-300)',
-          paddingBottom: 1,
-        }}>{prefix}{value.toLocaleString('en-US')}{suffix}</span>
-      </div>
-      <input
-        type="range"
-        min={min} max={max} step={step}
-        value={value}
-        onChange={(e) => setValue(Number(e.target.value))}
-        style={{
-          width: '100%',
-          appearance: 'none',
-          WebkitAppearance: 'none',
-          background: `linear-gradient(to right, var(--moss-300) 0%, var(--moss-300) ${pct}%, rgba(250,250,247,0.12) ${pct}%, rgba(250,250,247,0.12) 100%)`,
-          height: 4, borderRadius: 999, outline: 'none', cursor: 'pointer',
-        }}
-        className="fc-roi-slider"
-      />
-      {help && (
-        <div style={{ marginTop: 10, fontSize: 12, color: 'rgba(250,250,247,0.40)' }}>{help}</div>
-      )}
-    </div>
-  );
-};
+/* ROI Calculator — simplified single-slider version.
+   One question: how many no-shows per week?
+   One editable value: average patient value.
+   Result: monthly revenue lost. */
 
 const ROICalculator = ({ onBookDemo }) => {
-  const [appts, setAppts] = React.useState(80);     // weekly
-  const [rate,  setRate]  = React.useState(15);     // %
-  const [value, setValue] = React.useState(180);    // €
+  const [noShows, setNoShows] = React.useState(5);
+  const [avgValue, setAvgValue] = React.useState(250);
+  const [editing, setEditing] = React.useState(false);
+  const [inputVal, setInputVal] = React.useState('250');
 
-  // Monthly lost = weekly × 4.33 weeks × rate% × avg value
-  const monthlyLost = appts * 4.33 * (rate / 100) * value;
-  // Recovered = 71% of lost (typical FillChair rebook rate)
-  const recovered   = monthlyLost * 0.71;
-  // Cost placeholder
-  const cost        = 490;
-  const net         = recovered - cost;
+  const pct = ((noShows - 1) / (30 - 1)) * 100;
+
+  // Monthly loss = no-shows/week × 4.33 weeks × avg value
+  const monthlyLost = Math.round(noShows * 4.33 * avgValue);
+  const yearlyLost  = monthlyLost * 12;
+
+  const handleValueCommit = () => {
+    const n = parseInt(inputVal.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(n) && n > 0) setAvgValue(n);
+    else setInputVal(String(avgValue));
+    setEditing(false);
+  };
 
   return (
     <section className="fc-section" id="roi">
@@ -66,13 +33,13 @@ const ROICalculator = ({ onBookDemo }) => {
           overflow: 'hidden',
           color: 'var(--paper)',
         }}>
-          {/* soft moss highlight glow */}
+          {/* moss glow */}
           <div style={{
             position: 'absolute', top: -260, right: -160, width: 700, height: 700,
             background: 'radial-gradient(circle, rgba(172,207,188,0.18) 0%, transparent 60%)',
             pointerEvents: 'none',
           }} />
-          {/* subtle dot grid */}
+          {/* dot grid */}
           <div style={{
             position: 'absolute', inset: 0,
             backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)',
@@ -84,95 +51,158 @@ const ROICalculator = ({ onBookDemo }) => {
             position: 'relative',
             display: 'grid',
             gridTemplateColumns: '1.05fr 1fr',
-            gap: 64, alignItems: 'start',
+            gap: 64,
+            alignItems: 'center',
           }}>
-            {/* LEFT — heading + sliders */}
+
+            {/* LEFT — heading + slider + editable value */}
             <div>
               <div style={{
                 fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 12,
                 letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--moss-300)',
                 marginBottom: 18,
                 display: 'inline-flex', alignItems: 'center', gap: 10,
-                whiteSpace: 'nowrap',
               }}>
                 <span style={{ width: 5, height: 5, borderRadius: '50%', background: 'var(--moss-300)', flexShrink: 0 }} />
                 ROI calculator
               </div>
+
               <h2 style={{
                 fontFamily: 'var(--font-display)', fontWeight: 900,
-                fontSize: 'clamp(36px, 4.4vw, 64px)', lineHeight: 0.98,
-                letterSpacing: '-0.055em', color: 'var(--paper)',
+                fontSize: 'clamp(32px, 4vw, 58px)', lineHeight: 1.0,
+                letterSpacing: '-0.05em', color: 'var(--paper)',
                 textWrap: 'balance',
-                marginBottom: 22,
+                marginBottom: 48,
               }}>
-                How much money are you losing to <span style={{ color: 'var(--moss-300)' }}>no-shows</span> every month?
+                How much are<br/>empty chairs<br/>costing you?
               </h2>
-              <p style={{ fontSize: 17, lineHeight: 1.55, color: 'rgba(250,250,247,0.65)', maxWidth: 480, marginBottom: 44 }}>
-                Drag the sliders to match your practice. We'll show you what FillChair typically recovers.
-              </p>
 
-              <Slider
-                label="Appointments per week"
-                value={appts} setValue={setAppts}
-                min={20} max={300} step={5}
-                help="Across all chairs / providers in your practice."
-              />
-              <Slider
-                label="No-show rate"
-                value={rate} setValue={setRate}
-                min={5} max={40} step={1} suffix="%"
-                help="Industry average for private practices is 12–20%."
-              />
-              <Slider
-                label="Average appointment value"
-                value={value} setValue={setValue}
-                min={50} max={500} step={10} prefix="€"
-                help="What a single chair-hour is worth, on average."
-              />
+              {/* Slider block */}
+              <div style={{ marginBottom: 36 }}>
+                <div style={{
+                  fontSize: 18, color: 'rgba(250,250,247,0.75)',
+                  fontFamily: 'var(--font-sans)', fontWeight: 400,
+                  marginBottom: 20, lineHeight: 1.4,
+                }}>
+                  I had{' '}
+                  <span style={{
+                    fontFamily: 'var(--font-display)', fontWeight: 900,
+                    fontSize: 22, color: 'var(--moss-300)',
+                    borderBottom: '2px solid var(--moss-300)',
+                    paddingBottom: 1,
+                  }}>{noShows}</span>
+                  {' '}no-show{noShows !== 1 ? 's' : ''} this week
+                </div>
+
+                <input
+                  type="range"
+                  min={1} max={30} step={1}
+                  value={noShows}
+                  onChange={e => setNoShows(Number(e.target.value))}
+                  style={{
+                    width: '100%',
+                    appearance: 'none',
+                    WebkitAppearance: 'none',
+                    background: `linear-gradient(to right, var(--moss-300) 0%, var(--moss-300) ${pct}%, rgba(250,250,247,0.12) ${pct}%, rgba(250,250,247,0.12) 100%)`,
+                    height: 4, borderRadius: 999, outline: 'none', cursor: 'pointer',
+                  }}
+                  className="fc-roi-slider"
+                />
+                <div style={{
+                  display: 'flex', justifyContent: 'space-between',
+                  marginTop: 10, fontSize: 12,
+                  color: 'rgba(250,250,247,0.35)',
+                  fontFamily: 'var(--font-mono)',
+                }}>
+                  <span>1</span><span>30</span>
+                </div>
+              </div>
+
+              {/* Editable avg value */}
+              <div style={{
+                fontSize: 18, color: 'rgba(250,250,247,0.75)',
+                fontFamily: 'var(--font-sans)', fontWeight: 400,
+                lineHeight: 1.5,
+              }}>
+                and every patient is worth{' '}
+                {editing ? (
+                  <input
+                    autoFocus
+                    value={inputVal}
+                    onChange={e => setInputVal(e.target.value)}
+                    onBlur={handleValueCommit}
+                    onKeyDown={e => { if (e.key === 'Enter') handleValueCommit(); }}
+                    style={{
+                      display: 'inline-block',
+                      width: 90,
+                      fontFamily: 'var(--font-display)', fontWeight: 900,
+                      fontSize: 22, color: 'var(--moss-900)',
+                      background: 'var(--moss-300)',
+                      border: 'none', borderRadius: 6,
+                      padding: '2px 8px',
+                      outline: 'none',
+                      textAlign: 'center',
+                    }}
+                  />
+                ) : (
+                  <span
+                    onClick={() => { setEditing(true); setInputVal(String(avgValue)); }}
+                    title="Click to edit"
+                    style={{
+                      fontFamily: 'var(--font-display)', fontWeight: 900,
+                      fontSize: 22, color: 'var(--moss-300)',
+                      borderBottom: '2px solid var(--moss-300)',
+                      paddingBottom: 1, cursor: 'text',
+                    }}
+                  >${avgValue}</span>
+                )}{' '}
+                to me on average
+              </div>
             </div>
 
             {/* RIGHT — result card */}
             <div style={{
               border: '1.5px solid rgba(250,250,247,0.22)',
               borderRadius: 24,
-              padding: 36,
+              padding: 40,
               background: 'rgba(250,250,247,0.03)',
-              position: 'sticky', top: 24,
             }}>
               <div style={{
-                fontSize: 15, color: 'rgba(250,250,247,0.7)',
-                marginBottom: 14, textAlign: 'center',
+                fontSize: 14, color: 'rgba(250,250,247,0.6)',
+                marginBottom: 10, textAlign: 'center',
+                fontFamily: 'var(--font-sans)', letterSpacing: '0.02em',
               }}>
-                Monthly, FillChair recovers
+                You're losing every month
               </div>
+
               <div style={{
                 fontFamily: 'var(--font-display)', fontWeight: 900,
-                fontSize: 'clamp(48px, 5.5vw, 80px)', lineHeight: 1,
+                fontSize: 'clamp(52px, 6vw, 84px)', lineHeight: 1,
                 letterSpacing: '-0.06em', color: 'var(--moss-300)',
-                textAlign: 'center', marginBottom: 8,
+                textAlign: 'center', marginBottom: 6,
               }}>
-                {fmtEUR(recovered)}<span style={{ fontSize: '0.45em', color: 'rgba(172,207,188,0.6)' }}>/mo</span>
+                ${monthlyLost.toLocaleString('en-US')}
               </div>
+
               <div style={{
                 textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 11,
-                color: 'rgba(250,250,247,0.42)', letterSpacing: '0.06em',
-                marginBottom: 30,
+                color: 'rgba(250,250,247,0.38)', letterSpacing: '0.06em',
+                marginBottom: 32,
               }}>
-                {fmtEUR(recovered * 12)} / YEAR · BREAK-EVEN IN WEEK 1
+                ${yearlyLost.toLocaleString('en-US')} / YEAR
               </div>
 
-              <div style={{ height: 1, background: 'rgba(250,250,247,0.12)', marginBottom: 22 }} />
+              <div style={{ height: 1, background: 'rgba(250,250,247,0.12)', marginBottom: 24 }} />
 
-              <ResultRow label="Monthly loss"          value={fmtEUR(monthlyLost)} />
-              <ResultRow label="Rebook rate"           value="71%" />
-              <ResultRow label="FillChair fee"         value={fmtEUR(cost)} />
-              <ResultRow label="Net monthly gain"      value={fmtEUR(net)} highlight />
+              <ResultRow label="No-shows / week"   value={noShows} />
+              <ResultRow label="No-shows / month"  value={Math.round(noShows * 4.33)} />
+              <ResultRow label="Value per patient" value={`$${avgValue}`} />
+              <ResultRow label="Monthly loss"      value={`$${monthlyLost.toLocaleString('en-US')}`} highlight />
 
               <button
                 onClick={onBookDemo}
                 style={{
-                  marginTop: 30,
-                  width: '100%',
+                  marginTop: 30, width: '100%',
                   fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 15,
                   padding: '14px 22px', borderRadius: 999, border: 'none',
                   background: 'var(--paper)', color: 'var(--moss-900)',
@@ -183,9 +213,16 @@ const ROICalculator = ({ onBookDemo }) => {
                 onMouseOver={e => { e.currentTarget.style.background = '#FFFFFF'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
                 onMouseOut={e => { e.currentTarget.style.background = 'var(--paper)'; e.currentTarget.style.transform = 'none'; }}
               >
-                Get my recovery plan
+                See how much we can recover
                 <span>→</span>
               </button>
+
+              <div style={{
+                marginTop: 14, textAlign: 'center',
+                fontSize: 12, color: 'rgba(250,250,247,0.35)',
+              }}>
+                No contract · 60-day money-back guarantee
+              </div>
             </div>
           </div>
         </div>
@@ -200,7 +237,7 @@ const ROICalculator = ({ onBookDemo }) => {
           background: #FAFAF7;
           border: 3px solid var(--moss-300);
           cursor: pointer;
-          box-shadow: 0 4px 12px rgba(10, 37, 32, 0.35);
+          box-shadow: 0 4px 12px rgba(10,37,32,0.35);
           transition: transform 120ms;
         }
         .fc-roi-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
