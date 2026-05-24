@@ -1,0 +1,327 @@
+/* ============================================================
+   FillChair.io — Design tokens (v2: premium healthcare)
+   Light canvas · deep moss green · Apple-school typography.
+   Import this file once at the root of any HTML artifact.
+   ============================================================ */
+
+/* Webfonts. v2 picks:
+   - Display: Geist at 900 (Black) — a near-SF-Pro feel, bolder than v1's Bricolage at 700.
+   - Body: Geist regular/medium.
+   - Mono: Geist Mono. Single family, single voice.
+   - Editorial accent (occasional): Fraunces — a refined serif for "concierge" moments.
+   Substitutions flagged: swap to licensed Söhne/Tobias/Neue Haas Grotesk by replacing the import + --font-* vars. */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@300..900&family=Geist+Mono:wght@300..700&family=Fraunces:opsz,wght@9..144,300..700&display=swap');
+
+:root {
+  /* ============================================================
+     PRIMARY PALETTE — name semantically, not by past colorway
+     ============================================================ */
+
+  /* ---------- Paper: warm-white canvas & raised surfaces ---------- */
+  --paper:      #FAFAF7;   /* canvas / page background — slight warmth, not clinical white */
+  --paper-2:    #F4F5F1;   /* alt raised surface */
+  --mist:       #ECEEE8;   /* hover state on cards, soft divider tint */
+  --pure:       #FFFFFF;   /* pure white — cards on top of paper canvas */
+
+  /* ---------- Moss: the brand green ---------- */
+  --moss-900:   #0E3B2A;   /* deepest — used for headlines, mark fill */
+  --moss-800:   #144A36;   /* pressed state */
+  --moss-700:   #1F5C42;   /* PRIMARY — buttons, mark, accents */
+  --moss-600:   #287256;   /* hover */
+  --moss-500:   #4A8C6E;   /* mid green — illustrations, supporting */
+  --moss-400:   #7BAE94;   /* light accent */
+  --moss-300:   #ACCFBC;   /* tint, subtle highlights */
+  --moss-200:   #D3E5D9;   /* surface tint */
+  --moss-100:   #E8F1EC;   /* lightest tint */
+  --moss-50:    #F2F8F4;   /* whisper tint, used as section bg */
+
+  /* ---------- Ink: deep green-black text (NOT pure black) ---------- */
+  --ink-deep:   #061A14;   /* deepest reading text */
+  --ink:        #0A2520;   /* default body text — feels black, has green undertone */
+  --ink-2:      #1B3A33;   /* heading on light */
+  --ink-3:      #2D4B43;   /* secondary heading */
+
+  /* ---------- Slate: muted hierarchy ---------- */
+  --slate-2:    #4C5F58;   /* body secondary */
+  --slate-3:    #6F8079;   /* muted */
+  --slate-4:    #9CA8A2;   /* hint, placeholder */
+  --slate-5:    #BFC7C2;   /* dim, divider on text */
+
+  /* ---------- Borders / dividers (warm, soft) ---------- */
+  --border:        #E7E9E3;   /* default hairline */
+  --border-strong: #CFD3CB;   /* emphasized */
+  --border-soft:   #F0F1ED;   /* barely-there */
+
+  /* ---------- Semantic colors (light mode, warm) ---------- */
+  --success:      #1F8A5B;
+  --success-soft: rgba(31, 138, 91, 0.10);
+  --warning:      #B7791F;   /* warmer amber, not yellow */
+  --warning-soft: rgba(183, 121, 31, 0.10);
+  --danger:       #C44545;   /* warm coral-red */
+  --danger-soft:  rgba(196, 69, 69, 0.10);
+  --info:         var(--moss-700);
+
+  /* ---------- Editorial / dark-on-light premium accents ---------- */
+  --cream:        #F6F1E6;   /* a single warm cream — used sparingly for "concierge" moments */
+  --cream-deep:   #E6DBC4;
+
+  /* ============================================================
+     SEMANTIC ALIASES — use these in components
+     ============================================================ */
+  --bg:           var(--paper);
+  --bg-raised:    var(--pure);
+  --bg-hover:     var(--mist);
+  --bg-tint:      var(--moss-50);
+  --fg:           var(--ink);
+  --fg-2:         var(--ink-2);
+  --fg-3:         var(--slate-2);
+  --fg-muted:     var(--slate-3);
+  --fg-dim:       var(--slate-4);
+  --accent:       var(--moss-700);   /* primary brand accent */
+  --accent-fg:    var(--pure);       /* text drawn ON the accent */
+  --accent-hover: var(--moss-800);
+  --link:         var(--moss-700);
+
+  /* ============================================================
+     LEGACY ALIASES — kept so v1 component code keeps working.
+     Old name (left) now resolves to v2 value (right).
+     Avoid using these in new code; prefer the semantic aliases above.
+     ============================================================ */
+  --ink-950:  var(--ink-deep);     /* was deepest dark; now darkest text */
+  --ink-900:  var(--paper);        /* was canvas (dark); now canvas (light) */
+  --ink-850:  var(--paper-2);      /* was raised dark; now raised light */
+  --ink-800:  var(--pure);         /* was card dark; now card (white) */
+  --ink-700:  var(--mist);         /* was hovered card; now hovered card (light tint) */
+  --ink-600:  var(--border);       /* was divider on dark; now light hairline */
+  --ink-500:  var(--border-strong);/* was strong border on dark */
+  --slate-100: var(--ink);         /* was near-white text; now darkest text */
+  --slate-200: var(--ink-2);
+  --slate-300: var(--ink-3);
+  --slate-400: var(--slate-2);
+  --slate-500: var(--slate-3);
+  --slate-600: var(--slate-4);
+  --white:    var(--pure);
+  --sky-300:  var(--moss-700);     /* was primary accent (cyan); now moss */
+  --sky-400:  var(--moss-600);
+  --sky-500:  var(--moss-800);
+  --sky-600:  var(--moss-900);
+  --sky-200:  var(--moss-300);
+  --sky-glow: rgba(31, 92, 66, 0.10);   /* was sky-rgba; now moss-rgba */
+  --sky-glow-soft: rgba(31, 92, 66, 0.05);
+  --paper-2:  #F4F5F1;             /* unchanged */
+  --ink-on-paper: var(--ink);
+
+  /* ============================================================
+     TYPOGRAPHY
+     ============================================================ */
+  --font-display: 'Geist', system-ui, -apple-system, 'SF Pro Display', sans-serif;
+  --font-sans:    'Geist', system-ui, -apple-system, 'SF Pro Text', sans-serif;
+  --font-mono:    'Geist Mono', 'JetBrains Mono', ui-monospace, monospace;
+  --font-serif:   'Fraunces', 'Times New Roman', serif;
+
+  /* Type scale — generous, Apple-school */
+  --fs-display-xl: clamp(64px, 10vw, 144px);  /* hero hero */
+  --fs-display:    clamp(48px, 6.5vw, 96px);  /* section opener */
+  --fs-h1:         clamp(40px, 4.5vw, 64px);
+  --fs-h2:         clamp(32px, 3.2vw, 44px);
+  --fs-h3:         24px;
+  --fs-h4:         18px;
+  --fs-body:       17px;        /* slightly larger than v1 — premium feel */
+  --fs-body-lg:    19px;
+  --fs-small:      14px;
+  --fs-micro:      12px;
+  --fs-eyebrow:    12px;
+
+  --lh-tight:   0.94;
+  --lh-snug:    1.08;
+  --lh-normal:  1.5;
+  --lh-loose:   1.7;
+
+  --ls-tightest: -0.055em;  /* display, weight 900 */
+  --ls-tight:    -0.04em;   /* h1 */
+  --ls-snug:     -0.025em;  /* h2-h3 */
+  --ls-normal:   -0.005em;
+  --ls-eyebrow:   0.16em;   /* uppercase eyebrow — slightly looser than v1 */
+  --ls-mono:      0em;
+
+  --fw-light:    300;
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-black:    900;       /* v2 display weight — much bolder than v1 */
+
+  /* ============================================================
+     SPACING (4-pt) — same as v1
+     ============================================================ */
+  --s-0:  0;
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  20px;
+  --s-6:  24px;
+  --s-8:  32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+  --s-32: 128px;
+  --s-40: 160px;            /* added: Apple-school generous spacing */
+
+  /* ============================================================
+     RADII — slightly softer than v1
+     ============================================================ */
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 24px;
+  --r-2xl: 32px;
+  --r-pill: 999px;
+
+  --bw-hair: 1px;
+  --bw-1: 1px;
+  --bw-2: 2px;
+
+  /* ============================================================
+     ELEVATION — v2 uses soft, warm, light-mode shadows
+     ============================================================ */
+  --shadow-1: 0 1px 2px rgba(10, 37, 32, 0.04), 0 1px 1px rgba(10, 37, 32, 0.02);
+  --shadow-2: 0 4px 12px rgba(10, 37, 32, 0.06), 0 1px 3px rgba(10, 37, 32, 0.04);
+  --shadow-3: 0 24px 48px -12px rgba(10, 37, 32, 0.12), 0 4px 12px rgba(10, 37, 32, 0.05);
+  --shadow-soft: 0 12px 32px -8px rgba(10, 37, 32, 0.08);
+  /* v1's "glow-accent" — now a soft moss ring instead of cyan glow. */
+  --glow-accent:    0 0 0 1px rgba(31, 92, 66, 0.12), 0 12px 32px -8px rgba(31, 92, 66, 0.18);
+  --glow-accent-lg: 0 0 0 1px rgba(31, 92, 66, 0.14), 0 24px 60px -16px rgba(31, 92, 66, 0.22);
+
+  /* ============================================================
+     MOTION
+     ============================================================ */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-fast: 120ms;
+  --t-base: 200ms;
+  --t-slow: 360ms;
+
+  /* ============================================================
+     LAYOUT
+     ============================================================ */
+  --container: 1240px;
+  --gutter: 24px;
+}
+
+/* ============================================================
+   Semantic element styles — opt-in by adding the .fc-prose
+   class to a wrapper, or apply tokens directly.
+   ============================================================ */
+
+.fc-bg {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+/* Backward-compat: v1 used .fc-bg-dark */
+.fc-bg-dark { /* fallthrough */ }
+
+.fc-display-xl {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-display-xl);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tightest);
+  color: var(--fg);
+}
+.fc-display {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tightest);
+  color: var(--fg);
+}
+.fc-h1 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-h1);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--fg);
+}
+.fc-h2 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-snug);
+  color: var(--fg);
+}
+.fc-h3 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h3);
+  line-height: 1.25;
+  letter-spacing: var(--ls-normal);
+  color: var(--fg);
+}
+.fc-h4 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-h4);
+  line-height: 1.35;
+  color: var(--fg);
+}
+.fc-body {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+.fc-body-lg {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-normal);
+  color: var(--fg-3);
+}
+.fc-small {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--fg-muted);
+}
+.fc-micro {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-micro);
+  line-height: 1.4;
+  color: var(--fg-muted);
+}
+.fc-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.fc-mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: var(--ls-mono);
+  color: var(--fg-3);
+}
+
+.fc-accent { color: var(--accent); }
+.fc-fg     { color: var(--fg); }
+.fc-fg-2   { color: var(--fg-2); }
+.fc-fg-3   { color: var(--fg-3); }
+.fc-muted  { color: var(--fg-muted); }
