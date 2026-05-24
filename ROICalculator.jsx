@@ -9,7 +9,7 @@ const ROICalculator = ({ onBookDemo }) => {
   const pct = ((noShows - 1) / (30 - 1)) * 100;
 
   // Monthly loss = no-shows/week × 4 weeks × avg value
-  const monthlyLost = noShows * 4 * avgValue;
+  const monthlyLost = Math.round(noShows * 4.33 * avgValue);
   const yearlyLost  = monthlyLost * 12;
 
   const handleValueCommit = () => {
@@ -26,7 +26,7 @@ const ROICalculator = ({ onBookDemo }) => {
           position: 'relative',
           background: 'var(--moss-900)',
           borderRadius: 32,
-          padding: '88px 64px',
+          padding: '56px 64px',
           overflow: 'hidden',
           color: 'var(--paper)',
         }}>
@@ -181,7 +181,7 @@ const ROICalculator = ({ onBookDemo }) => {
               <div style={{ height: 1, background: 'rgba(250,250,247,0.12)', marginBottom: 24 }} />
 
               <ResultRow label="No-shows / week"   value={noShows} />
-              <ResultRow label="No-shows / month"  value={noShows * 4} />
+              <ResultRow label="No-shows / month"  value={Math.round(noShows * 4.33)} />
               <ResultRow label="Value per patient" value={`$${avgValue}`} />
               <ResultRow label="Yearly loss"       value={`$${yearlyLost.toLocaleString('en-US')}`} highlight />
 
@@ -203,12 +203,7 @@ const ROICalculator = ({ onBookDemo }) => {
                 <span>→</span>
               </button>
 
-              <div style={{
-                marginTop: 14, textAlign: 'center',
-                fontSize: 12, color: 'rgba(250,250,247,0.35)',
-              }}>
-                No contract · 60-day money-back guarantee
-              </div>
+
             </div>
           </div>
         </div>
