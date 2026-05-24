@@ -1,7 +1,4 @@
-/* ROI Calculator — simplified single-slider version.
-   One question: how many no-shows per week?
-   One editable value: average patient value.
-   Result: monthly revenue lost. */
+/* ROI Calculator — simplified single-slider version. */
 
 const ROICalculator = ({ onBookDemo }) => {
   const [noShows, setNoShows] = React.useState(5);
@@ -11,8 +8,8 @@ const ROICalculator = ({ onBookDemo }) => {
 
   const pct = ((noShows - 1) / (30 - 1)) * 100;
 
-  // Monthly loss = no-shows/week × 4.33 weeks × avg value
-  const monthlyLost = Math.round(noShows * 4.33 * avgValue);
+  // Monthly loss = no-shows/week × 4 weeks × avg value
+  const monthlyLost = noShows * 4 * avgValue;
   const yearlyLost  = monthlyLost * 12;
 
   const handleValueCommit = () => {
@@ -33,13 +30,11 @@ const ROICalculator = ({ onBookDemo }) => {
           overflow: 'hidden',
           color: 'var(--paper)',
         }}>
-          {/* moss glow */}
           <div style={{
             position: 'absolute', top: -260, right: -160, width: 700, height: 700,
             background: 'radial-gradient(circle, rgba(172,207,188,0.18) 0%, transparent 60%)',
             pointerEvents: 'none',
           }} />
-          {/* dot grid */}
           <div style={{
             position: 'absolute', inset: 0,
             backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 0)',
@@ -55,7 +50,7 @@ const ROICalculator = ({ onBookDemo }) => {
             alignItems: 'center',
           }}>
 
-            {/* LEFT — heading + slider + editable value */}
+            {/* LEFT */}
             <div>
               <div style={{
                 fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 12,
@@ -77,7 +72,7 @@ const ROICalculator = ({ onBookDemo }) => {
                 How much are<br/>empty chairs<br/>costing you?
               </h2>
 
-              {/* Slider block */}
+              {/* Slider */}
               <div style={{ marginBottom: 36 }}>
                 <div style={{
                   fontSize: 18, color: 'rgba(250,250,247,0.75)',
@@ -93,7 +88,6 @@ const ROICalculator = ({ onBookDemo }) => {
                   }}>{noShows}</span>
                   {' '}no-show{noShows !== 1 ? 's' : ''} this week
                 </div>
-
                 <input
                   type="range"
                   min={1} max={30} step={1}
@@ -179,25 +173,17 @@ const ROICalculator = ({ onBookDemo }) => {
                 fontFamily: 'var(--font-display)', fontWeight: 900,
                 fontSize: 'clamp(52px, 6vw, 84px)', lineHeight: 1,
                 letterSpacing: '-0.06em', color: 'var(--moss-300)',
-                textAlign: 'center', marginBottom: 6,
+                textAlign: 'center', marginBottom: 32,
               }}>
                 ${monthlyLost.toLocaleString('en-US')}
-              </div>
-
-              <div style={{
-                textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 11,
-                color: 'rgba(250,250,247,0.38)', letterSpacing: '0.06em',
-                marginBottom: 32,
-              }}>
-                ${yearlyLost.toLocaleString('en-US')} / YEAR
               </div>
 
               <div style={{ height: 1, background: 'rgba(250,250,247,0.12)', marginBottom: 24 }} />
 
               <ResultRow label="No-shows / week"   value={noShows} />
-              <ResultRow label="No-shows / month"  value={Math.round(noShows * 4.33)} />
+              <ResultRow label="No-shows / month"  value={noShows * 4} />
               <ResultRow label="Value per patient" value={`$${avgValue}`} />
-              <ResultRow label="Monthly loss"      value={`$${monthlyLost.toLocaleString('en-US')}`} highlight />
+              <ResultRow label="Yearly loss"       value={`$${yearlyLost.toLocaleString('en-US')}`} highlight />
 
               <button
                 onClick={onBookDemo}
