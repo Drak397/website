@@ -1,8 +1,7 @@
 /* FillChair marketing UI kit — global styles (v2: premium healthcare).
    Design tokens inlined — no external import needed. */
 
-/* ===== Design Tokens ===== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   /* ── Fonts ── */
@@ -10,38 +9,38 @@
   --font-display: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono:    'SF Mono', 'Fira Code', 'Fira Mono', monospace;
 
-  /* ── Base backgrounds ── */
-  --bg:           #0A0A0A;
-  --bg-raised:    #111111;
+  /* ── Base backgrounds — LIGHT ── */
+  --bg:           #FFFFFF;
+  --bg-raised:    #FFFFFF;
   --paper:        #FAFAF7;
-  --paper-2:      #F0F0EC;
+  --paper-2:      #F5F5F0;
 
-  /* ── Ink scale (dark surfaces) ── */
-  --ink-850:      #111111;
-  --ink-800:      #161616;
-  --ink-700:      #1E1E1E;
-  --ink-600:      #282828;
-  --ink-500:      #333333;
+  /* ── Ink scale (used as bg in dark cards/sections) ── */
+  --ink-850:      #F5F5F0;
+  --ink-800:      #F0F0EB;
+  --ink-700:      #E8E8E2;
+  --ink-600:      #DDDDD7;
+  --ink-500:      #D0D0CA;
 
   /* ── Foreground ── */
-  --fg:           #FAFAF7;
-  --fg-2:         #D4D4CE;
-  --fg-3:         #9A9A94;
-  --fg-muted:     #6B6B65;
-  --fg-dim:       #4A4A45;
+  --fg:           #0A0A0A;
+  --fg-2:         #2A2A2A;
+  --fg-3:         #6B6B6B;
+  --fg-muted:     #9A9A9A;
+  --fg-dim:       #BABABA;
 
   /* ── Accent — Emerald ── */
   --accent:       #1A7A4A;
   --accent-hover: #1E9057;
-  --accent-fg:    #FAFAF7;
+  --accent-fg:    #FFFFFF;
 
-  /* ── Moss palette ── */
-  --moss-900:     #0A2520;
-  --moss-50:      rgba(31, 92, 66, 0.08);
-  --moss-300:     #ACCFBC;
+  /* ── Moss palette (used for the two green blocks) ── */
+  --moss-900:     #0D3D25;
+  --moss-50:      rgba(26, 122, 74, 0.06);
+  --moss-300:     #22A863;
 
   /* ── Sky (info tones) ── */
-  --sky-glow:     rgba(31, 92, 66, 0.10);
+  --sky-glow:     rgba(26, 122, 74, 0.08);
   --sky-300:      #1A7A4A;
   --sky-500:      #145E37;
 
@@ -50,25 +49,25 @@
   --slate-400:    #8A9490;
 
   /* ── Borders ── */
-  --border:       rgba(255, 255, 255, 0.08);
-  --border-strong:rgba(255, 255, 255, 0.16);
+  --border:        rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.16);
 
   /* ── Semantic ── */
-  --success:      #34D399;
-  --success-soft: rgba(52, 211, 153, 0.10);
-  --warning:      #FBBF24;
-  --warning-soft: rgba(251, 191, 36, 0.10);
+  --success:      #16A34A;
+  --success-soft: rgba(22, 163, 74, 0.10);
+  --warning:      #D97706;
+  --warning-soft: rgba(217, 119, 6, 0.10);
 
   /* ── Shadows ── */
-  --shadow-1:     0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-2:     0 4px 16px rgba(0,0,0,0.5), 0 2px 4px rgba(0,0,0,0.3);
-  --shadow-3:     0 12px 40px rgba(0,0,0,0.6), 0 4px 12px rgba(0,0,0,0.4);
+  --shadow-1:  0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-2:  0 4px 16px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06);
+  --shadow-3:  0 12px 40px rgba(0,0,0,0.13), 0 4px 12px rgba(0,0,0,0.07);
 
   /* ── Glow ── */
-  --glow-accent:  0 0 0 1px rgba(26,122,74,0.3), 0 8px 32px rgba(26,122,74,0.15);
+  --glow-accent: 0 0 0 1px rgba(26,122,74,0.2), 0 8px 32px rgba(26,122,74,0.10);
 
   /* ── Mist ── */
-  --mist:         rgba(255,255,255,0.06);
+  --mist: rgba(0,0,0,0.04);
 }
 
 /* ===== Reset ===== */
