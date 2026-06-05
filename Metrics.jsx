@@ -30,11 +30,11 @@ const Metrics = () => (
             fontSize: 'clamp(36px, 4vw, 52px)', lineHeight: 1.05,
             letterSpacing: '-0.035em', marginTop: 20,
           }}>
-            What our<br/>practices typically see.
+            What practices like yours<br/>typically recover.
           </h2>
         </div>
         <p style={{ color: 'var(--fg-3)', fontSize: 16, lineHeight: 1.55, maxWidth: 460 }}>
-          Median results across active FillChair practices, measured over the first 90 days. Your numbers will vary — we send a personalized projection during your demo.
+          Based on industry benchmarks and automation data across comparable dental practices. Your specific numbers depend on your practice size, no-show rate, and dormant list — we'll project yours in the demo.
         </p>
       </div>
 

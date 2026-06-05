@@ -124,7 +124,7 @@ const HeroVisual = () => {
         whiteSpace: 'nowrap',
       }}>
         <div><strong style={{ color: 'var(--fg-2)', fontWeight: 600 }}>Today:</strong> 47 actions</div>
-        <div><strong style={{ color: 'var(--fg-2)', fontWeight: 600 }}>This week:</strong> €4,820 recovered</div>
+        <div><strong style={{ color: 'var(--fg-2)', fontWeight: 600 }}>This week:</strong> $4,820 recovered</div>
       </div>
 
       <style>{`

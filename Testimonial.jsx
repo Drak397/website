@@ -34,7 +34,7 @@ const Testimonial = () => (
             textWrap: 'balance',
             marginBottom: 32,
           }}>
-            We added <span style={{ color: 'var(--accent)' }}>$74k of recovered revenue</span> in the first 90 days without anyone on our team doing anything different. The chair just fills now. That's the whole pitch.
+            We built FillChair because every practice we talked to had the same problem: patients falling through the cracks silently. No-shows nobody followed up on. Dormant patients nobody reactivated. Reviews nobody requested. We automate all three.
           </p>
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <div style={{
@@ -43,10 +43,10 @@ const Testimonial = () => (
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontFamily: 'var(--font-display)', fontWeight: 900, fontSize: 18,
               color: 'var(--accent-fg)',
-            }}>DR</div>
+            }}>G</div>
             <div>
-              <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 15, color: 'var(--fg)' }}>Dr. Rachel Okonkwo</div>
-              <div style={{ color: 'var(--fg-muted)', fontSize: 13 }}>Owner, Belmont Family Dental · 2 ops, 1 hygienist</div>
+              <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: 15, color: 'var(--fg)' }}>Gianmarco</div>
+              <div style={{ color: 'var(--fg-muted)', fontSize: 13 }}>Founder · FillChair.io</div>
             </div>
             <div style={{ flex: 1 }} />
             <div style={{ display: 'flex', gap: 2 }}>
