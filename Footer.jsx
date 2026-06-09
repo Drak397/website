@@ -72,7 +72,7 @@ const Footer = () => (
           paddingLeft: 16, borderLeft: '1px solid var(--border)', marginLeft: 4,
           color: 'var(--fg-muted)', fontSize: 13,
         }}>
-          The practice runs itself. You see your patients.
+          You see your patients. The practice runs itself.
         </div>
       </div>
       <div style={{
